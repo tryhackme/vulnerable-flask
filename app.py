@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from flask import Flask, request, render_template
 from urllib.parse import urlparse
 import requests
