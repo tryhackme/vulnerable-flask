@@ -3,6 +3,7 @@ from flask import Flask, request, render_template
 from urllib.parse import urlparse
 import requests
 import tldextract
+import ipaddress
 
 app = Flask(__name__)
 
@@ -22,12 +23,13 @@ def index():
             elif url.startswith("https:///"):
                 url = url.replace("https:///", "https:///")
         extracted = tldextract.extract(url)
-        if not extracted.suffix:
-            if "." not in extracted.domain:
-                extracted = extracted._replace(domain=extracted.domain + ".com")
-            url = extracted.registered_domain
-            response = requests.get(url)
-            return render_template('index.html', response_text=response.text)
+        if extracted.suffix:
+            domain = extracted.registered_domain
+            try:
+                ip = str(ipaddress.ip_address(domain))
+                url = url.replace(domain, ip)
+            except ValueError:
+                pass
         response = requests.get(url)
         return render_template('index.html', response_text=response.text)
     return render_template('index.html')
