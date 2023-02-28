@@ -1,0 +1,2 @@
+# Vulnerable Flask App
+This repository includes the code base and dependency requirements (requirements.txt) for the vulnerable Flask app used in IAM Initial Access Room. Please see the associated Cloudformation Template EC2 Launch Template user data to understand deployment approach.
